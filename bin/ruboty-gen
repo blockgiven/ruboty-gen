@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "ruboty"
+require "ruboty/gen"
+
+require "bundler"
+require "bundler/friendly_errors"
+Bundler.with_friendly_errors do
+  Ruboty::Gen::CLI.start(ARGV, debug: true)
+end

@@ -1,0 +1,11 @@
+module Ruboty
+  module Handlers
+    class <%= config[:ruboty_plugin_constant_name] %> < Base
+      on /<%= config[:ruboty_plugin_name].gsub('_', ' ') %>/, name: 'todo', description: 'TODO: write your description'
+
+      def todo(message)
+        Ruboty::<%= config[:ruboty_plugin_constant_name] %>::Actions::<%= config[:ruboty_plugin_constant_name] %>.new(message).call
+      end
+    end
+  end
+end
