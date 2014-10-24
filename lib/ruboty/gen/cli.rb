@@ -20,9 +20,10 @@ module Ruboty
       end
 
       desc "gem GEM [OPTIONS]", "Creates a skeleton for creating a ruboty plugin"
-      def gem(name)
+      def gem(name, *actions)
+        actions = [name] if actions.size.zero?
         Bundler::CLI::Gem.new(options, "ruboty-#{name}", self).run
-        Ruboty::Gen::Gem.new(options, name, self).run
+        Ruboty::Gen::Gem.new(options, name, actions, self).run
       end
     end
   end

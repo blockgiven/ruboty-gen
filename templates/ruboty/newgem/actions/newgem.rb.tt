@@ -1,7 +1,7 @@
 module Ruboty
   module <%= config[:ruboty_plugin_constant_name] %>
     module Actions
-      class <%= config[:ruboty_plugin_constant_name] %> < Ruboty::Actions::Base
+      class <%= config[:constant_action] %> < Ruboty::Actions::Base
         def call
           message.reply("TODO: write a message.")
         end
