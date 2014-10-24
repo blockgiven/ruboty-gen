@@ -1,6 +1,5 @@
 require "<%=config[:namespaced_path]%>/version"
 require "ruboty/handlers/<%= config[:name].gsub(/^ruboty-/, '') %>"
-require "ruboty/<%= config[:name].gsub(/^ruboty-/, '') %>/actions/<%= config[:name].gsub(/^ruboty-/, '') %>"
 <%- if config[:ext] -%>
 require "<%=config[:namespaced_path]%>/<%=config[:underscored_name]%>"
 <%- end -%>

@@ -1,11 +1,21 @@
+<%- if config[:actions] -%>
+  <%- config[:actions].each do |action| -%>
+require "ruboty/<%= config[:name].gsub(/^ruboty-/, '') %>/actions/<%= action %>"
+  <%- end -%>
+<%- end -%>
+
 module Ruboty
   module Handlers
     class <%= config[:ruboty_plugin_constant_name] %> < Base
-      on /<%= config[:ruboty_plugin_name].gsub('_', ' ') %>/, name: 'todo', description: 'TODO: write your description'
+<%- config[:actions].each do |action| -%>
+      on /<%= config[:ruboty_plugin_name].gsub('_', ' ') %> <%= action %>/, name: '<%= action %>', description: 'TODO: write your description'
+<%- end -%>
+<%- config[:actions].each_with_index do |action, i| -%>
 
-      def todo(message)
-        Ruboty::<%= config[:ruboty_plugin_constant_name] %>::Actions::<%= config[:ruboty_plugin_constant_name] %>.new(message).call
+      def <%= action %>(message)
+        Ruboty::<%= config[:ruboty_plugin_constant_name] %>::Actions::<%= config[:constant_actions][i]%>.new(message).call
       end
+<%- end -%>
     end
   end
 end

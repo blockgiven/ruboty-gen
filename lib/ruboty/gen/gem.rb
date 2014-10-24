@@ -1,11 +1,12 @@
 module Ruboty
   module Gen
     class Gem
-      attr_reader :options, :ruboty_plugin_name, :thor
+      attr_reader :options, :ruboty_plugin_name, :actions, :thor
 
-      def initialize(options, ruboty_plugin_name, thor)
+      def initialize(options, ruboty_plugin_name, actions, thor)
         @options = options
         @ruboty_plugin_name = ruboty_plugin_name.chomp("/")
+        @actions = actions
         @thor = thor
       end
 
@@ -21,6 +22,8 @@ module Ruboty
         constant_array = constant_name.split('::')
         git_user_name = `git config user.name`.chomp
         git_user_email = `git config user.email`.chomp
+        constant_actions = actions.map { |e|camelize(e) }
+
         opts = {
           :name               => name,
           :ruboty_plugin_name => ruboty_plugin_name,
@@ -33,11 +36,22 @@ module Ruboty
           :author             => git_user_name.empty? ? "TODO: Write your name" : git_user_name,
           :email              => git_user_email.empty? ? "TODO: Write your email address" : git_user_email,
           :test               => options[:test],
-          :ext                => options[:ext]
+          :ext                => options[:ext],
+          :actions            => actions,
+          :constant_actions   => constant_actions
         }
 
         thor.template(File.join('ruboty/handlers/newgem.rb.tt'),       File.join(target, "lib/ruboty/handlers/#{ruboty_plugin_name}.rb"),            opts)
-        thor.template(File.join('ruboty/newgem/actions/newgem.rb.tt'), File.join(target, "lib/ruboty/#{ruboty_plugin_name}/actions/#{ruboty_plugin_name}.rb"), opts)
+        actions.each do |action|
+          opts[:constant_action] = camelize(action)
+          thor.template(File.join('ruboty/newgem/actions/newgem.rb.tt'), File.join(target, "lib/ruboty/#{ruboty_plugin_name}/actions/#{action}.rb"), opts)
+        end
+      end
+
+      private
+
+      def camelize(text)
+        text.split('_').map { |e|e.capitalize }.join
       end
     end
   end
