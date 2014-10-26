@@ -1,6 +1,7 @@
 # Ruboty::Gen
 
 generators for creating ruboty plugin.
+[![Gem Version](https://badge.fury.io/rb/ruboty-gen.svg)](http://badge.fury.io/rb/ruboty-gen)
 
 ## Installation
 
