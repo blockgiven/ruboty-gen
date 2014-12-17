@@ -20,6 +20,7 @@ module Ruboty
       end
 
       desc "gem GEM [OPTIONS]", "Creates a skeleton for creating a ruboty plugin"
+      option :rescue, type: :boolean, desc: 'generate rescue logic'
       def gem(name, *actions)
         actions = [name] if actions.size.zero?
         Bundler::CLI::Gem.new(options, "ruboty-#{name}", self).run

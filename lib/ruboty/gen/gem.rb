@@ -42,9 +42,11 @@ module Ruboty
         }
 
         thor.template(File.join('ruboty/handlers/newgem.rb.tt'),       File.join(target, "lib/ruboty/handlers/#{ruboty_plugin_name}.rb"),            opts)
+        action_template = @options['rescue'] ? 'newgem_rescue.rb.tt' : 'newgem.rb.tt'
         actions.each do |action|
           opts[:constant_action] = camelize(action)
-          thor.template(File.join('ruboty/newgem/actions/newgem.rb.tt'), File.join(target, "lib/ruboty/#{ruboty_plugin_name}/actions/#{action}.rb"), opts)
+          opts[:action] = action
+          thor.template(File.join("ruboty/newgem/actions/#{action_template}"), File.join(target, "lib/ruboty/#{ruboty_plugin_name}/actions/#{action}.rb"), opts)
         end
       end
 
