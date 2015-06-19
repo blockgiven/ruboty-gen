@@ -6,7 +6,6 @@ require 'bundler/cli/gem'
 module Ruboty
   module Gen
     class CLI < Bundler::CLI
-      include Thor::Actions
 
       def self.start(*)
         super
